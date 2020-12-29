@@ -4,33 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   
   <title>Frontend Mentor | Article preview component</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+
 </head>
 <body>
-
-  Shift the overall look and feel by adding these wonderful 
-  touches to furniture in your home
-
-  Ever been in a room and felt like something was missing? Perhaps 
-  it felt slightly bare and uninviting. I’ve got some simple tips 
-  to help you make any room feel complete.
-
-  Michelle Appleton
-  28 Jun 2020
-
-  Share
   
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+  <div class="h-screen bg-gray-200 flex justify-center items-center">
+    <div class="bg-white  h-64 rounded-lg shadow-lg flex" style="width: 650px;">
+      <!-- image -->
+      <img class="flex-none h-full w-2/5 rounded-l-lg shadow-none" src="/images/drawers.jpg" alt="drawers">
+      
+      <div class="flex-auto p-8">
+        <!-- Hero tag -->
+        <div class="text-gray-600 text-lg font-semibold mb-2">
+          Shift the overall look and feel by adding these wonderful touches to furniture in your home
+        </div>
+
+        <!-- Details -->
+        <div class="text-gray-600 text-xs font-light mb-2">
+          Ever been in a room and felt like something was missing ? Perhaps it felt slightly bare and uninventing . I've got some simple tips to help you make any room to feel complete. 
+        </div>
+
+        <!-- Author  -->
+        <div class="flex justify-between content-start">
+            <div class="flex flex-auto space-x-4">
+              <!-- avatar -->
+              <img class="rounded-full h-8 w-8" src="/images/avatar-michelle.jpg" alt="Avatar">
+              
+              <!-- Basic info -->
+              <div class="flex flex-col justift-around">
+                <div class="text-gray-600 text-xs font-semibold">Mitchel Appleton</div>
+                <div class="text-gray-500 text-xs">28 Jun 2020</div>
+              </div>
+            </div>
+
+            <!-- share button -->
+            <div class="rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center">
+              <img class="text-blue-200" src="/images/icon-share.svg" alt="">
+            </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    
+    
+  </div>  
 </body>
 </html>
