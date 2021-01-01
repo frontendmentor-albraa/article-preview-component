@@ -7,6 +7,32 @@
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <style>
+    .share:hover ~ .dropup{
+      display: absolute !important;
+    }
+    svg{
+      fill: currentColor;
+    }
+    .dropup{
+      display: none;
+    }
+    .dropup:after,
+    .dropup:after {
+      content:'';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 0;
+      height: 0;
+      border-top: solid 0.5rem hsl(217, 19%, 35%);
+      border-left: solid 0.5rem transparent;
+      border-right: solid 0.5rem transparent;
+    }
+  </style>
   
   <title>Frontend Mentor | Article preview component</title>
 
@@ -44,9 +70,28 @@
             </div>
 
             <!-- share button -->
-            <div class="rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center">
-              <img class="text-blue-200" src="/images/icon-share.svg" alt="">
+            <div class="inline-block relative">
+              <div class="dropup absolute -mt-12 -ml-16 px-8 py-2 rounded-lg" style="background-color: hsl(217, 19%, 35%);">
+                <div class="flex justify-center items-center space-x-2">
+                  <div class="text-xs" style="background-image: linear-gradient(to bottom, hsl(210, 46%, 95%), hsl(217, 19%, 35%)); background-clip: text;color: transparent; -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;">SHARE</div>
+                  <div class="w-3 h-3">
+                    <img src="/images/icon-facebook.svg" alt="facebook">
+                  </div>
+                  <div class="w-3 h-3">
+                    <img src="/images/icon-twitter.svg" alt="Twitter">
+                  </div><div class="w-3 h-3">
+                    <img src="/images/icon-pinterest.svg" alt="Pinterest">
+                  </div>
+                </div>
+              </div>
+              <div class="share rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center ">
+              
+                
+                <img class="img" src="/images/icon-share.svg" alt="">
+              </div>
             </div>
+            
 
         </div>
 
