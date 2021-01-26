@@ -9,15 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
 
   <style>
-    .share:hover ~ .dropup{
-      display: absolute !important;
-    }
-    svg{
-      fill: currentColor;
-    }
-    .dropup{
-      display: none;
-    }
     .dropup:after,
     .dropup:after {
       content:'';
@@ -31,6 +22,9 @@
       border-top: solid 0.5rem hsl(217, 19%, 35%);
       border-left: solid 0.5rem transparent;
       border-right: solid 0.5rem transparent;
+    }
+    .grayish{
+      background: #6E8098;
     }
   </style>
   
@@ -57,7 +51,7 @@
         </div>
 
         <!-- Author  -->
-        <div class="flex justify-between content-start">
+        <div  class="flex justify-between content-start">
             <div class="flex flex-auto space-x-4">
               <!-- avatar -->
               <img class="rounded-full h-8 w-8" src="/images/avatar-michelle.jpg" alt="Avatar">
@@ -70,8 +64,8 @@
             </div>
 
             <!-- share button -->
-            <div class="inline-block relative">
-              <div class="dropup absolute -mt-12 -ml-16 px-8 py-2 rounded-lg" style="background-color: hsl(217, 19%, 35%);">
+            <div x-data="share()"  class="inline-block relative">
+              <div x-show="active" class="dropup absolute -mt-12 -ml-16 px-8 py-2 rounded-lg" style="background-color: hsl(217, 19%, 35%);">
                 <div class="flex justify-center items-center space-x-2">
                   <div class="text-xs" style="background-image: linear-gradient(to bottom, hsl(210, 46%, 95%), hsl(217, 19%, 35%)); background-clip: text;color: transparent; -webkit-background-clip: text;
                   -webkit-text-fill-color: transparent;">SHARE</div>
@@ -85,10 +79,13 @@
                   </div>
                 </div>
               </div>
-              <div class="share rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center ">
+              <div x-on:mouseover="hover()" x-on:mouseout="out()" x-ref="shareButton" class="share rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center ">
               
                 
-                <img class="img" src="/images/icon-share.svg" alt="">
+                <svg class="img" width="15" height="13">
+                  <path x-ref="shareIcon" fill="#6E8098" d="M15 6.495L8.766.014V3.88H7.441C3.33 3.88 0 7.039 0 10.936v2.049l.589-.612C2.59 10.294 5.422 9.11 8.39 9.11h.375v3.867L15 6.495z"/>
+                </svg>
+                <!-- <img class="img" src="/images/icon-share.svg" alt=""> -->
               </div>
             </div>
             
@@ -100,6 +97,30 @@
     </div>
     
     
-  </div>  
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <script>
+    function share(){
+      return {
+        active: false,
+        hover(){
+          this.$refs.shareButton.classList.remove('bg-gray-300');
+          this.$refs.shareButton.classList.add('grayish');
+          this.$refs.shareIcon.style.fill = '#FFFFFF';
+          this.active = true;
+        },
+        out(){
+          this.$refs.shareIcon.style.fill = '#6E8098';//shareButton
+          this.$refs.shareButton.classList.remove('grayish');
+          this.$refs.shareButton.classList.add('bg-gray-300');
+          this.active = false;
+          //this.$refs.shareButton.style.background = '#FFFFFF';
+        }
+      };
+
+    }
+
+
+  </script>  
 </body>
 </html>
