@@ -65,7 +65,7 @@
 
             <!-- share button -->
             <div x-data="share()"  class="inline-block relative">
-              <div x-show="active" class="dropup absolute -mt-12 -ml-16 px-8 py-2 rounded-lg" style="background-color: hsl(217, 19%, 35%);">
+              <div x-ref="showDiv" x-show="active" class="dropup absolute -mt-12 -ml-16 px-8 py-2 rounded-lg" style="background-color: hsl(217, 19%, 35%);">
                 <div class="flex justify-center items-center space-x-2">
                   <div class="text-xs" style="background-image: linear-gradient(to bottom, hsl(210, 46%, 95%), hsl(217, 19%, 35%)); background-clip: text;color: transparent; -webkit-background-clip: text;
                   -webkit-text-fill-color: transparent;">SHARE</div>
@@ -79,7 +79,7 @@
                   </div>
                 </div>
               </div>
-              <div x-on:mouseover="hover()" x-on:mouseout="out()" x-ref="shareButton" class="share rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center ">
+              <div @click="hover()" @click.away="out()" x-ref="shareButton" class="share rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center ">
               
                 
                 <svg class="img" width="15" height="13">
@@ -98,23 +98,66 @@
     
     
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   <script>
     function share(){
       return {
         active: false,
         hover(){
-          this.$refs.shareButton.classList.remove('bg-gray-300');
-          this.$refs.shareButton.classList.add('grayish');
-          this.$refs.shareIcon.style.fill = '#FFFFFF';
-          this.active = true;
+          let timeline = gsap.timeline({
+            onStart : this.activate(),
+            onComplete : this.activate()
+          });
+          
+          const button = this.$refs.shareButton;
+          const icon = this.$refs.shareIcon;
+          const share = this.$refs.showDiv;
+          
+          timeline
+            .from(share , {autoAlpha:0 , top:10 })
+            .set(button , {duration: 0.2,className: "+=share rounded-full h-8 w-8 flex justify-center items-center  grayish" , ease: Bounce.easeOut})
+            .to(icon , {fill : '#FFFFFF' , duration: 0.2 , ease: Bounce.easeOut })
+            .to(share , {autoAlpha:1  , duration: 0.4 , ease: Power2.easeOut})
+            .to(share , {top:0 , duration: 0.4 , ease: Power2.easeOut } , "<")
+
+            ;
+          
+          //this.$refs.shareButton.classList.remove('bg-gray-300');
+          //this.$refs.shareButton.classList.add('grayish');
+
+          //this.$refs.shareIcon.style.fill = '#FFFFFF';
+          
         },
         out(){
-          this.$refs.shareIcon.style.fill = '#6E8098';//shareButton
-          this.$refs.shareButton.classList.remove('grayish');
-          this.$refs.shareButton.classList.add('bg-gray-300');
+          if(this.active === true){
+            //console.log("test");
+            let timeline = gsap.timeline({
+              onStart : this.activate(),
+              //onComplete : this.deActivate()
+            });
+            const button = this.$refs.shareButton;
+            const icon = this.$refs.shareIcon;
+            const share = this.$refs.showDiv;
+
+            timeline
+              .from(share , {autoAlpha : 1 , top: 0})
+              .to(share , {top:10 , duration: 0.4 , ease: Power2.easeOut})
+              .to(share , { autoAlpha : 0  , duration: 0.4 , ease: Power2.easeOut } , "<0.2")
+              
+              .set(button , {className: "+=share rounded-full h-8 w-8 flex justify-center items-center  bg-gray-300" ,duration: 0.2  , ease: Bounce.easeOut})
+              .to(icon , {fill : '#6E8098' , duration: 0.2 , ease: Bounce.easeOut})
+              
+              ;
+          
+          }
+          
+        },
+        activate(){
+          this.active = true;
+        },
+        deActivate(){
           this.active = false;
-          //this.$refs.shareButton.style.background = '#FFFFFF';
         }
       };
 
