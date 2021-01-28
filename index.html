@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link href="assets/tailwind.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
 
   <style>
+    body{
+      font-family: 'Manrope', sans-serif;
+    }
     .dropup:after,
     .dropup:after {
       content:'';
@@ -26,6 +31,24 @@
     .grayish{
       background: #6E8098;
     }
+    .main-section{
+      font-weight: 700;
+      color: hsl(217, 19%, 35%);
+    }
+    .details-section{
+      font-weight: 500;
+      color: hsl(214, 17%, 51%);
+    }
+    @media (max-width: 375px)  {
+      .main{
+        height: 600px !important;
+      }
+    }
+    @media (min-width: 375px)  {
+      .main{
+        height: 300px !important;
+      }
+    }
   </style>
   
   <title>Frontend Mentor | Article preview component</title>
@@ -35,23 +58,27 @@
 <body>
   
   <div class="h-screen bg-gray-200 flex justify-center items-center">
-    <div class="bg-white  h-64 rounded-lg shadow-lg flex" style="width: 650px;">
+    <div class="main bg-white my-12 mx-4 sm:m-0 sm:h-64 h-3/4 sm:m-0 rounded-lg shadow-lg flex items-center space-y-2 sm:space-y-0 flex-col sm:flex-row sm:max-w-2xl max-w-full	">
       <!-- image -->
-      <img class="flex-none h-full w-2/5 rounded-l-lg shadow-none" src="/images/drawers.jpg" alt="drawers">
+      <img class="h-2/5 w-full sm:h-full rounded-t-lg sm:flex-none sm:h-full sm:w-2/5 sm:rounded-l-lg sm:rounded-tr-none shadow-none" src="/images/drawers.jpg" alt="drawers">
       
-      <div class="flex-auto p-8">
+      <div class="flex-auto py-10 px-8  h-3/5 sm:h-full">
+
+        <div class="h-4/5 sm:mb-4">
         <!-- Hero tag -->
-        <div class="text-gray-600 text-lg font-semibold mb-2">
-          Shift the overall look and feel by adding these wonderful touches to furniture in your home
+          <div class="main-section text-lg font-semibold sm:mb-2 mb-4">
+            Shift the overall look and feel by adding these wonderful touches to furniture in your home
+          </div>
+
+          <!-- Details -->
+          <div class="details-section text-sm font-light sm:mb-2 mb-6">
+            Ever been in a room and felt like something was missing ? Perhaps it felt slightly bare and uninventing . I've got some simple tips to help you make any room to feel complete. 
+          </div>
         </div>
 
-        <!-- Details -->
-        <div class="text-gray-600 text-xs font-light mb-2">
-          Ever been in a room and felt like something was missing ? Perhaps it felt slightly bare and uninventing . I've got some simple tips to help you make any room to feel complete. 
-        </div>
 
         <!-- Author  -->
-        <div  class="flex justify-between content-start">
+        <div  class="flex justify-between content-start h-1/5 ">
             <div class="flex flex-auto space-x-4">
               <!-- avatar -->
               <img class="rounded-full h-8 w-8" src="/images/avatar-michelle.jpg" alt="Avatar">
@@ -64,8 +91,8 @@
             </div>
 
             <!-- share button -->
-            <div x-data="share()"  class="inline-block relative">
-              <div x-ref="showDiv" x-show="active" class="dropup absolute -mt-12 -ml-16 px-8 py-2 rounded-lg" style="background-color: hsl(217, 19%, 35%);">
+            <div x-data="share()"  class="sm:inline-block sm:relative">
+              <div x-ref="showDiv" x-show="active" class="dropup absolute sm:-mt-12 sm:-ml-16 mt-0 px-8 py-2 rounded-lg w-full" style="background-color: hsl(217, 19%, 35%);">
                 <div class="flex justify-center items-center space-x-2">
                   <div class="text-xs" style="background-image: linear-gradient(to bottom, hsl(210, 46%, 95%), hsl(217, 19%, 35%)); background-clip: text;color: transparent; -webkit-background-clip: text;
                   -webkit-text-fill-color: transparent;">SHARE</div>
@@ -88,6 +115,8 @@
                 <!-- <img class="img" src="/images/icon-share.svg" alt=""> -->
               </div>
             </div>
+
+            
             
 
         </div>
@@ -105,6 +134,8 @@
       return {
         active: false,
         hover(){
+          var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+          //if(width >= 375){
           let timeline = gsap.timeline({
             onStart : this.activate(),
             onComplete : this.activate()
@@ -122,6 +153,10 @@
             .to(share , {top:0 , duration: 0.4 , ease: Power2.easeOut } , "<")
 
             ;
+
+        //} else {
+
+        //}
           
           //this.$refs.shareButton.classList.remove('bg-gray-300');
           //this.$refs.shareButton.classList.add('grayish');
