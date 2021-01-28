@@ -43,10 +43,19 @@
       .main{
         height: 600px !important;
       }
+      .mobile-share{
+        z-index: -1;
+      }
+      .dropup{
+        display: none;
+      }
     }
     @media (min-width: 375px)  {
       .main{
         height: 300px !important;
+      }
+      .mobile-share{
+        display: none;
       }
     }
   </style>
@@ -58,13 +67,13 @@
 <body>
   
   <div class="h-screen bg-gray-200 flex justify-center items-center">
-    <div class="main bg-white my-12 mx-4 sm:m-0 sm:h-64 h-3/4 sm:m-0 rounded-lg shadow-lg flex items-center space-y-2 sm:space-y-0 flex-col sm:flex-row sm:max-w-2xl max-w-full	">
+    <div x-data="share()" class="main bg-white my-12 mx-4 sm:m-0 sm:h-64 h-3/4 sm:m-0 rounded-lg shadow-lg flex items-center  sm:space-y-0 flex-col sm:flex-row sm:max-w-2xl max-w-full	">
       <!-- image -->
       <img class="h-2/5 w-full sm:h-full rounded-t-lg sm:flex-none sm:h-full sm:w-2/5 sm:rounded-l-lg sm:rounded-tr-none shadow-none" src="/images/drawers.jpg" alt="drawers">
       
-      <div class="flex-auto py-10 px-8  h-3/5 sm:h-full">
+      <div class="sm:flex-auto pt-10 pb-2 px-8  h-3/5 sm:h-full">
 
-        <div class="h-4/5 sm:mb-4">
+        <div x-ref="underShare" class="h-4/5 ">
         <!-- Hero tag -->
           <div class="main-section text-lg font-semibold sm:mb-2 mb-4">
             Shift the overall look and feel by adding these wonderful touches to furniture in your home
@@ -79,54 +88,96 @@
 
         <!-- Author  -->
         <div  class="flex justify-between content-start h-1/5 ">
-            <div class="flex flex-auto space-x-4">
-              <!-- avatar -->
-              <img class="rounded-full h-8 w-8" src="/images/avatar-michelle.jpg" alt="Avatar">
-              
-              <!-- Basic info -->
-              <div class="flex flex-col justift-around">
-                <div class="text-gray-600 text-xs font-semibold">Mitchel Appleton</div>
-                <div class="text-gray-500 text-xs">28 Jun 2020</div>
-              </div>
+          <div class="flex flex-auto space-x-4">
+            <!-- avatar -->
+            <img class="rounded-full h-8 w-8" src="/images/avatar-michelle.jpg" alt="Avatar">
+            
+            <!-- Basic info -->
+            <div class="flex flex-col justift-around">
+              <div class="text-gray-600 text-xs font-semibold">Mitchel Appleton</div>
+              <div class="text-gray-500 text-xs">28 Jun 2020</div>
             </div>
-
-            <!-- share button -->
-            <div x-data="share()"  class="sm:inline-block sm:relative">
-              <div x-ref="showDiv" x-show="active" class="dropup absolute sm:-mt-12 sm:-ml-16 mt-0 px-8 py-2 rounded-lg w-full" style="background-color: hsl(217, 19%, 35%);">
-                <div class="flex justify-center items-center space-x-2">
-                  <div class="text-xs" style="background-image: linear-gradient(to bottom, hsl(210, 46%, 95%), hsl(217, 19%, 35%)); background-clip: text;color: transparent; -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;">SHARE</div>
-                  <div class="w-3 h-3">
-                    <img src="/images/icon-facebook.svg" alt="facebook">
-                  </div>
-                  <div class="w-3 h-3">
-                    <img src="/images/icon-twitter.svg" alt="Twitter">
-                  </div><div class="w-3 h-3">
-                    <img src="/images/icon-pinterest.svg" alt="Pinterest">
-                  </div>
+          </div>
+      
+          <!-- share button -->
+          <div  class="sm:inline-block sm:relative flex">
+            <div x-ref="showDiv" x-show="active" class="dropup absolute -mt-12 -ml-16 px-8 py-2 rounded-lg" style="background-color: hsl(217, 19%, 35%);">
+              <div class="flex justify-center items-center space-x-2">
+                <div class="text-xs" style="background-image: linear-gradient(to bottom, hsl(210, 46%, 95%), hsl(217, 19%, 35%)); background-clip: text;color: transparent; -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;">SHARE</div>
+                <div class="w-3 h-3">
+                  <img src="/images/icon-facebook.svg" alt="facebook">
+                </div>
+                <div class="w-3 h-3">
+                  <img src="/images/icon-twitter.svg" alt="Twitter">
+                </div><div class="w-3 h-3">
+                  <img src="/images/icon-pinterest.svg" alt="Pinterest">
                 </div>
               </div>
-              <div @click="hover()" @click.away="out()" x-ref="shareButton" class="share rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center ">
-              
-                
-                <svg class="img" width="15" height="13">
-                  <path x-ref="shareIcon" fill="#6E8098" d="M15 6.495L8.766.014V3.88H7.441C3.33 3.88 0 7.039 0 10.936v2.049l.589-.612C2.59 10.294 5.422 9.11 8.39 9.11h.375v3.867L15 6.495z"/>
-                </svg>
-                <!-- <img class="img" src="/images/icon-share.svg" alt=""> -->
-              </div>
             </div>
-
+            <div @click="hover()" @click.away="out()" x-ref="shareButton" class="share rounded-full bg-gray-300 h-8 w-8 flex justify-center items-center ">
             
-            
+              
+              <svg class="img" width="15" height="13">
+                <path x-ref="shareIcon" fill="#6E8098" d="M15 6.495L8.766.014V3.88H7.441C3.33 3.88 0 7.039 0 10.936v2.049l.589-.612C2.59 10.294 5.422 9.11 8.39 9.11h.375v3.867L15 6.495z"/>
+              </svg>
+              
+            </div>
+          </div>
+      
+      
+          
+      
+          
+          
+      
+      </div>
 
-        </div>
+        
 
       </div>
 
+      <div x-ref="mobileShare" x-show="active"  class="mobile-share flex items-center  justify-between	h-1/5 w-full rounded-b-lg px-8 py-2"  style="background-color: hsl(217, 19%, 35%);">
+      
+        <div class="flex justify-center items-center space-x-4 ">
+          
+
+            <div class="text-xs" style="background-image: linear-gradient(to bottom, hsl(210, 46%, 95%), hsl(217, 19%, 35%)); background-clip: text;color: transparent; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;">SHARE</div>
+            <div class="w-4 h-4">
+              <img src="/images/icon-facebook.svg" alt="facebook">
+            </div>
+            <div class="w-4 h-4">
+              <img src="/images/icon-twitter.svg" alt="Twitter">
+            </div><div class="w-4 h-4">
+              <img src="/images/icon-pinterest.svg" alt="Pinterest">
+            </div>
+
+          
+        </div>
+
+        <div  @click="out()" x-ref="shareButton" class="share-mob rounded-full bg-gray-300 h-6 w-6 flex justify-center items-center grayish">
+      
+        
+          <svg class="img" width="15" height="13">
+            <path x-ref="shareIcon" fill="#FFFFFF" d="M15 6.495L8.766.014V3.88H7.441C3.33 3.88 0 7.039 0 10.936v2.049l.589-.612C2.59 10.294 5.422 9.11 8.39 9.11h.375v3.867L15 6.495z"/>
+          </svg>
+          
+        </div>
+      </div>
+
+      </div>
     </div>
     
-    
+
+    </div>
   </div>
+
+
+
+  
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   <script>
@@ -135,28 +186,45 @@
         active: false,
         hover(){
           var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-          //if(width >= 375){
+          if(width >= 375){
+            let timeline = gsap.timeline({
+              onStart : this.activate(),
+              onComplete : this.activate()
+            });
+            
+            const button = this.$refs.shareButton;
+            const icon = this.$refs.shareIcon;
+            const share = this.$refs.showDiv;
+            
+            timeline
+              .from(share , {autoAlpha:0 , top:10 })
+              .set(button , {duration: 0.2,className: "+=share rounded-full h-8 w-8 flex justify-center items-center  grayish" , ease: Bounce.easeOut})
+              .to(icon , {fill : '#FFFFFF' , duration: 0.2 , ease: Bounce.easeOut })
+              .to(share , {autoAlpha:1  , duration: 0.4 , ease: Power2.easeOut})
+              .to(share , {top:0 , duration: 0.4 , ease: Power2.easeOut } , "<")
+
+              ;
+
+        } else {
+          const shareMobile = this.$refs.mobileShare;
+          const underShare = this.$refs.underShare;
+
+          console.log("mob" ,shareMobile);
+          console.log("und" ,underShare);
+          
           let timeline = gsap.timeline({
             onStart : this.activate(),
             onComplete : this.activate()
           });
-          
-          const button = this.$refs.shareButton;
-          const icon = this.$refs.shareIcon;
-          const share = this.$refs.showDiv;
-          
+
           timeline
-            .from(share , {autoAlpha:0 , top:10 })
-            .set(button , {duration: 0.2,className: "+=share rounded-full h-8 w-8 flex justify-center items-center  grayish" , ease: Bounce.easeOut})
-            .to(icon , {fill : '#FFFFFF' , duration: 0.2 , ease: Bounce.easeOut })
-            .to(share , {autoAlpha:1  , duration: 0.4 , ease: Power2.easeOut})
-            .to(share , {top:0 , duration: 0.4 , ease: Power2.easeOut } , "<")
+              .from(shareMobile , {autoAlpha:0 , { css:{scaleX:0.0, scaleY:0.0} })
+              .from(underShare , {autoAlpha:1  , {css:{scaleX:1.0, scaleY:1.0}} )
+              .to(shareMobile , {autoAlpha:1 , css:{zIndex:1} , duration: 0.4 , ease: Power2.easeOut })
+              .to(underShare , {autoAlpha:0 , css:{zIndex:-1}  ,duration: 0.4 , ease: Power2.easeOut } , "<")
 
-            ;
 
-        //} else {
-
-        //}
+        }
           
           //this.$refs.shareButton.classList.remove('bg-gray-300');
           //this.$refs.shareButton.classList.add('grayish');
