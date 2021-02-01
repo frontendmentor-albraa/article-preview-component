@@ -43,9 +43,7 @@
       .main{
         height: 600px !important;
       }
-      .mobile-share{
-        z-index: -1;
-      }
+      
       .dropup{
         display: none;
       }
@@ -73,7 +71,7 @@
       
       <div class="sm:flex-auto pt-10 pb-2 px-8  h-3/5 sm:h-full">
 
-        <div x-ref="underShare" class="h-4/5 ">
+        <div  class="h-4/5 ">
         <!-- Hero tag -->
           <div class="main-section text-lg font-semibold sm:mb-2 mb-4">
             Shift the overall look and feel by adding these wonderful touches to furniture in your home
@@ -87,7 +85,7 @@
 
 
         <!-- Author  -->
-        <div  class="flex justify-between content-start h-1/5 ">
+        <div x-ref="underShare" class="flex justify-between content-start h-1/5 ">
           <div class="flex flex-auto space-x-4">
             <!-- avatar -->
             <img class="rounded-full h-8 w-8" src="/images/avatar-michelle.jpg" alt="Avatar">
@@ -209,8 +207,7 @@
           const shareMobile = this.$refs.mobileShare;
           const underShare = this.$refs.underShare;
 
-          console.log("mob" ,shareMobile);
-          console.log("und" ,underShare);
+          
           
           let timeline = gsap.timeline({
             onStart : this.activate(),
@@ -218,10 +215,10 @@
           });
 
           timeline
-              .from(shareMobile , {autoAlpha:0 , { css:{scaleX:0.0, scaleY:0.0} })
-              .from(underShare , {autoAlpha:1  , {css:{scaleX:1.0, scaleY:1.0}} )
-              .to(shareMobile , {autoAlpha:1 , css:{zIndex:1} , duration: 0.4 , ease: Power2.easeOut })
-              .to(underShare , {autoAlpha:0 , css:{zIndex:-1}  ,duration: 0.4 , ease: Power2.easeOut } , "<")
+              .from(shareMobile , {autoAlpha:0 ,  perspective:800 , rotationX:'180' })
+              //.from(underShare , {autoAlpha:1  , perspective:800 , rotationY:'-=180'})
+              .to(underShare , {delay: -0.5 , autoAlpha:0 , perspective:800 , rotationX:'180'  ,duration: 0.4 , ease: Power2.easeOut } )
+              .to(shareMobile , { y: -12 ,  autoAlpha:1 , perspective:800 , rotationX:'0'  , duration: 0.4 , ease: Power2.easeOut })
 
 
         }
@@ -233,26 +230,52 @@
           
         },
         out(){
-          if(this.active === true){
-            //console.log("test");
-            let timeline = gsap.timeline({
-              onStart : this.activate(),
-              //onComplete : this.deActivate()
-            });
-            const button = this.$refs.shareButton;
-            const icon = this.$refs.shareIcon;
-            const share = this.$refs.showDiv;
+          var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+          if(width >= 375){
+            if(this.active === true){
+              //console.log("test");
+              let timeline = gsap.timeline({
+                onStart : this.activate(),
+                //onComplete : this.deActivate()
+              });
+              const button = this.$refs.shareButton;
+              const icon = this.$refs.shareIcon;
+              const share = this.$refs.showDiv;
 
-            timeline
-              .from(share , {autoAlpha : 1 , top: 0})
-              .to(share , {top:10 , duration: 0.4 , ease: Power2.easeOut})
-              .to(share , { autoAlpha : 0  , duration: 0.4 , ease: Power2.easeOut } , "<0.2")
+              timeline
+                .from(share , {autoAlpha : 1 , top: 0})
+                .to(share , {top:10 , duration: 0.4 , ease: Power2.easeOut})
+                .to(share , { autoAlpha : 0  , duration: 0.4 , ease: Power2.easeOut } , "<0.2")
+                
+                .set(button , {className: "+=share rounded-full h-8 w-8 flex justify-center items-center  bg-gray-300" ,duration: 0.2  , ease: Bounce.easeOut})
+                .to(icon , {fill : '#6E8098' , duration: 0.2 , ease: Bounce.easeOut})
+                
+                ;
+            
+            }
+          }
+          else {
+            if(this.active === true){
+              const shareMobile = this.$refs.mobileShare;
+              const underShare = this.$refs.underShare;
+    
               
-              .set(button , {className: "+=share rounded-full h-8 w-8 flex justify-center items-center  bg-gray-300" ,duration: 0.2  , ease: Bounce.easeOut})
-              .to(icon , {fill : '#6E8098' , duration: 0.2 , ease: Bounce.easeOut})
               
-              ;
-          
+              let timeline = gsap.timeline({
+                onStart : this.activate(),
+                onComplete : this.activate()
+              });
+    
+              timeline
+                  .from(shareMobile , {   autoAlpha:1 , perspective:800 , rotationX:'0' } )  
+                  .from(underShare , { autoAlpha:0 , perspective:800 , rotationX:'180' } )
+                  .to(shareMobile , {autoAlpha:0 ,  perspective:800 , rotationX:'180' , ease: Power2.easeOut })
+                  //.from(underShare , {autoAlpha:1  , perspective:800 , rotationY:'-=180'})
+                  
+                  .to(underShare , {autoAlpha:1 ,  perspective:800 , rotationX:'0' , duration: 0.4 , ease: Power2.easeOut })
+                  
+    
+            }
           }
           
         },
